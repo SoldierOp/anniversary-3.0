@@ -1,0 +1,308 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: #080810;
+    color: #f0f0f0;
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+  }
+
+  #root {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@layer components {
+  /* ─── Glass Panel ─── */
+  .glass {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 20, 147, 0.18);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  }
+
+  .glass-strong {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 20, 147, 0.25);
+    box-shadow: 0 0 0 1px rgba(255,20,147,0.08), 0 8px 40px rgba(0,0,0,0.7);
+  }
+
+  /* ─── Neon Text ─── */
+  .neon-pink {
+    color: #ff1493;
+    text-shadow: 0 0 8px #ff1493, 0 0 16px #ff149388, 0 0 32px #ff149344;
+  }
+
+  .neon-glow {
+    text-shadow: 0 0 10px #ff4da6, 0 0 20px #ff4da688, 0 0 40px #ff4da644;
+  }
+
+  .neon-white {
+    text-shadow: 0 0 10px #ffffff88, 0 0 20px #ffffff44;
+  }
+
+  /* ─── Mission Font ─── */
+  .font-mission { font-family: 'Space Mono', monospace; }
+  .font-display { font-family: 'Space Grotesk', sans-serif; }
+
+  /* ─── CRT / Scanline effect ─── */
+  .scanlines::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.08) 2px,
+      rgba(0,0,0,0.08) 4px
+    );
+    pointer-events: none;
+    z-index: 50;
+  }
+
+  /* ─── Buttons ─── */
+  .btn-mission {
+    @apply relative px-8 py-3 font-mission text-sm font-bold tracking-widest uppercase
+           border border-mission-pink text-mission-pink
+           transition-all duration-300 overflow-hidden cursor-pointer;
+    background: rgba(255,20,147,0.05);
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  }
+
+  .btn-mission::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,20,147,0.15) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .btn-mission:hover {
+    background: rgba(255,20,147,0.15);
+    box-shadow: 0 0 20px #ff149388, inset 0 0 20px rgba(255,20,147,0.1);
+    text-shadow: 0 0 8px #ff1493;
+  }
+
+  .btn-mission:hover::before { opacity: 1; }
+
+  .btn-mission:active { transform: scale(0.97); }
+
+  .btn-mission-primary {
+    @apply btn-mission text-black bg-mission-pink border-mission-pink;
+    background: linear-gradient(135deg, #ff1493, #ff4da6);
+    color: white;
+    text-shadow: none;
+  }
+
+  .btn-mission-primary:hover {
+    background: linear-gradient(135deg, #ff4da6, #ff1493);
+    box-shadow: 0 0 30px #ff1493, 0 0 60px #ff149366;
+  }
+
+  .btn-small {
+    @apply relative px-5 py-2 font-mission text-xs font-bold tracking-widest uppercase
+           border border-mission-pink/40 text-mission-pink/80
+           transition-all duration-200 cursor-pointer;
+    background: rgba(255,20,147,0.04);
+  }
+
+  .btn-small:hover {
+    @apply border-mission-pink text-mission-pink;
+    background: rgba(255,20,147,0.12);
+    box-shadow: 0 0 12px rgba(255,20,147,0.4);
+  }
+
+  /* ─── Animated border ─── */
+  .border-animated {
+    position: relative;
+  }
+
+  .border-animated::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(90deg, #ff1493, transparent, #ff4da6, transparent, #ff1493);
+    background-size: 300% 100%;
+    animation: shimmer 3s linear infinite;
+    z-index: -1;
+    border-radius: inherit;
+  }
+
+  /* ─── Mission badge ─── */
+  .mission-badge {
+    @apply inline-flex items-center gap-1 px-3 py-1 font-mission text-xs tracking-widest uppercase;
+    background: rgba(255,20,147,0.1);
+    border: 1px solid rgba(255,20,147,0.3);
+    color: #ff69b4;
+  }
+
+  /* ─── HEX corners ─── */
+  .corner-tl::before,
+  .corner-br::after {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-color: #ff1493;
+    border-style: solid;
+  }
+  .corner-tl::before {
+    top: 4px; left: 4px;
+    border-width: 2px 0 0 2px;
+  }
+  .corner-br::after {
+    bottom: 4px; right: 4px;
+    border-width: 0 2px 2px 0;
+  }
+
+  /* ─── Scrollable area ─── */
+  .scroll-area {
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: #ff1493 #0d0d1a;
+  }
+
+  /* ─── Input ─── */
+  .input-mission {
+    @apply w-full bg-transparent border-b-2 border-mission-pink/40 px-4 py-3
+           font-mission text-sm text-white tracking-wider
+           focus:outline-none focus:border-mission-pink
+           transition-all duration-300 placeholder-white/20;
+  }
+
+  .input-mission:focus {
+    box-shadow: 0 4px 12px rgba(255,20,147,0.2);
+  }
+
+  /* ─── Progress bar ─── */
+  .progress-bar {
+    height: 4px;
+    background: rgba(255,20,147,0.15);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ff1493, #ff4da6);
+    border-radius: 2px;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 8px #ff1493;
+  }
+
+  /* ─── Achievement card ─── */
+  .achievement-card {
+    @apply glass border border-mission-gold/30 rounded-lg p-5 relative;
+    background: linear-gradient(135deg, rgba(255,215,0,0.05), rgba(255,20,147,0.05));
+  }
+
+  /* ─── Screen container ─── */
+  .screen {
+    @apply absolute inset-0 w-full h-full flex flex-col items-center justify-center;
+    overflow: hidden;
+  }
+}
+
+@layer utilities {
+  .text-shimmer {
+    background: linear-gradient(90deg, #ff1493, #ff69b4, #ffb6c1, #ff69b4, #ff1493);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 3s linear infinite;
+  }
+
+  .text-glow-gold {
+    color: #ffd700;
+    text-shadow: 0 0 8px #ffd70088, 0 0 16px #ffd70044;
+  }
+
+  .bg-grid {
+    background-image:
+      linear-gradient(rgba(255,20,147,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,20,147,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .bg-dots {
+    background-image: radial-gradient(circle, rgba(255,20,147,0.12) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+}
+
+/* ─── Global animation keyframes ─── */
+@keyframes shimmer {
+  from { background-position: -200% center; }
+  to { background-position: 200% center; }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 10px #ff1493, 0 0 20px #ff149355; }
+  50% { box-shadow: 0 0 25px #ff1493, 0 0 50px #ff149399, 0 0 80px #ff149333; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-15px) rotate(3deg); }
+  66% { transform: translateY(-8px) rotate(-2deg); }
+}
+
+@keyframes heartRain {
+  0% { transform: translateY(-20px) rotate(var(--rot)); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(calc(var(--rot) + 360deg)); opacity: 0; }
+}
+
+@keyframes vaultOpen {
+  0% { transform: scaleX(1); }
+  100% { transform: scaleX(0); }
+}
+
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes radarPing {
+  0% { transform: scale(0.5); opacity: 1; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+@keyframes coinPop {
+  0% { transform: scale(0) rotate(0deg); opacity: 0; }
+  60% { transform: scale(1.3) rotate(180deg); opacity: 1; }
+  100% { transform: scale(1) rotate(360deg); opacity: 1; }
+}
+
+/* ─── Particle canvas ─── */
+#particle-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}

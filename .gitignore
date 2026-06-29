@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Editor
+.DS_Store
+.vscode/settings.json
+*.log
+
+# Local env
+.env
+.env.local
+public/video/anniversary.mp4
