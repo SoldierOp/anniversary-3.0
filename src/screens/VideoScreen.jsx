@@ -9,7 +9,7 @@ import FloatingHearts from '../components/FloatingHearts'
 //  Or update VIDEO_SRC to any valid URL
 // ═══════════════════════════════════════════════════════════════
 
-const VIDEO_SRC = '/video/anniversary.mp4'
+const VIDEO_SRC = 'https://github.com/SoldierOp/anniversary-3.0/releases/download/v1.0/anniversary.mp4'
 
 export default function VideoScreen() {
   const { setScreen } = useGame()
